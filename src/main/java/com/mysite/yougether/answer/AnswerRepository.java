@@ -1,4 +1,4 @@
-package com.mysite.yougether;
+package com.mysite.yougether.answer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

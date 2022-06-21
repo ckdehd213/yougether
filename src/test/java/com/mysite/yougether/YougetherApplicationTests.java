@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysite.yougether.answer.Answer;
+import com.mysite.yougether.answer.AnswerRepository;
+import com.mysite.yougether.question.Question;
+import com.mysite.yougether.question.QuestionRepository;
+
 @SpringBootTest
 class YougetherApplicationTests {
 

@@ -1,32 +1,37 @@
-package com.mysite.yougether;
+package com.mysite.yougether.question;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import org.springframework.data.annotation.CreatedDate;
+import com.mysite.yougether.answer.Answer;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class Answer {
+public class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(length = 200)
+	private String subject;
+	
 	@Column(columnDefinition = "TEXT")
 	private String content;
 	
-	@CreatedDate
 	private LocalDateTime createDate;
 	
-	@ManyToOne
-	private Question question;
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+	private List<Answer> answerList;
+	
 }

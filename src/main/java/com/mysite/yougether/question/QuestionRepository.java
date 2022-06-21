@@ -1,4 +1,4 @@
-package com.mysite.yougether;
+package com.mysite.yougether.question;
 
 import java.util.List;
 
