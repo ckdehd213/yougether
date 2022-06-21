@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HelloController {
+public class MainController {
 
-	@RequestMapping("/hello")
-	@ResponseBody
-	public String hello() {
-		return "Hello ssd";
+	@RequestMapping("/")
+	public String root() {
+		return "redirect:/question/list";
 	}
 }
+

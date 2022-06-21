@@ -1,0 +1,17 @@
+<!--  <html xmlns:th="http://www.thymeleaf.org">-->
+
+<table>
+    <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="question : ${QList}">
+        	<!-- 타임리프는 문자열을 연결(concatenation)할 때 | 문자를 사용한다. -->
+            <td th:href="@{|/question/detail/${question/id}|}" th:text="${question.subject}"></td> 
+            <td th:text="${question.createDate}"></td>
+        </tr>
+    </tbody>
+</table>
