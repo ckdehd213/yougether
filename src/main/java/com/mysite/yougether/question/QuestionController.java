@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,13 +22,13 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class QuestionController {
 
-	private final QuestionService service;
+	private final QuestionService qService;
 	
 	@RequestMapping("/list")
 	//@ResponseBody 템플릿을 사용하기 때문에 필요 x
 	public String list(Model model) {
 		
-		List<Question> questionList = this.service.getList();
+		List<Question> questionList = this.qService.getList();
 		model.addAttribute("QList", questionList);
 		
 		return "question_list";
@@ -33,10 +36,22 @@ public class QuestionController {
 	
 	@RequestMapping("/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
-		Question question = this.service.getQuestion(id);
+		Question question = this.qService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "question_detail";
-		
+
+	}
+	
+	@GetMapping("/create")
+	public String questionCreate() {
+		return "question_form";
+	}
+	// 오버로딩
+	@PostMapping("/create")
+	public String questionCreate(@RequestParam String subject, @RequestParam  String content) {
+			
+		this.qService.create(content, subject);
+		return "redirect:/question/list";
 	}
 	
 }
