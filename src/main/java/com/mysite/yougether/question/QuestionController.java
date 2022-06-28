@@ -1,9 +1,8 @@
 package com.mysite.yougether.question;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mysite.yougether.answer.AnswerForm;
 
@@ -30,10 +30,10 @@ public class QuestionController {
 	
 	@RequestMapping("/list")
 	//@ResponseBody 템플릿을 사용하기 때문에 필요 x
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(value="page", defaultValue = "0") int page) {
 		
-		List<Question> questionList = this.qService.getList();
-		model.addAttribute("QList", questionList);
+		Page<Question> paging = this.qService.getList(page);
+		model.addAttribute("paging", paging);
 		
 		return "question_list";
 	}

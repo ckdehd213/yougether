@@ -16,6 +16,7 @@ import com.mysite.yougether.answer.Answer;
 import com.mysite.yougether.answer.AnswerRepository;
 import com.mysite.yougether.question.Question;
 import com.mysite.yougether.question.QuestionRepository;
+import com.mysite.yougether.question.QuestionService;
 
 @SpringBootTest
 class YougetherApplicationTests {
@@ -25,6 +26,9 @@ class YougetherApplicationTests {
 	
 	@Autowired
 	private AnswerRepository ar;
+	
+	@Autowired
+	private QuestionService qService;
 	
 	/*@Test  //질문 데이터삽입 테스트
 	void testJpa() {
@@ -127,6 +131,7 @@ class YougetherApplicationTests {
         assertEquals(2, a.getQuestion().getId());
 	}
 	*/
+	/*
 	@Transactional
 	@Test	// 질문에서 답변 찾기
 	void testJpa() {
@@ -138,6 +143,15 @@ class YougetherApplicationTests {
 
         assertEquals(1, answerList.size());
         assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
+	}
+	*/
+	@Test
+	void testJpa() {
+		for(int i=1; i <= 300; i++) {
+			String subject = String.format("테스트데이터 : [%03d]", i);
+			String content = "내용무";
+			this.qService.create(subject, content);
+		}
 	}
 	
 }
