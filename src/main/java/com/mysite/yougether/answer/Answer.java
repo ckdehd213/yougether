@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.mysite.yougether.question.Question;
+import com.mysite.yougether.user.SiteUser;
 
 import lombok.Data;
 
@@ -31,4 +32,7 @@ public class Answer {
 	
 	@ManyToOne
 	private Question question;
+	
+	@ManyToOne
+	private SiteUser author;
 }

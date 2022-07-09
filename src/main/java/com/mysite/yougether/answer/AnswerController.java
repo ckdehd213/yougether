@@ -1,5 +1,7 @@
 package com.mysite.yougether.answer;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mysite.yougether.question.Question;
 import com.mysite.yougether.question.QuestionService;
+import com.mysite.yougether.user.SiteUser;
+import com.mysite.yougether.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,18 +26,20 @@ public class AnswerController {
 
 	private final QuestionService qService;
 	private final AnswerService aService;
+	private final UserService uService;
 	
 	
-	//@PostMapping("/create/{id}")
-	@RequestMapping(value = "/create/{id}", method = {RequestMethod.POST, RequestMethod.GET})
+	@PostMapping("/create/{id}")
+	//@RequestMapping(value = "/create/{id}", method = {RequestMethod.POST, RequestMethod.GET})
     public String createAnswer(Model model, @PathVariable("id") Integer id,
-                               @Valid AnswerForm answerForm, BindingResult bindingResult) {
+                               @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
         Question question = this.qService.getQuestion(id);
+        SiteUser siteUser = this.uService.getUser(principal.getName());
         if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
             return "question_detail";
         }
-        this.aService.create(question, answerForm.getContent());
+        this.aService.create(question, answerForm.getContent(), siteUser);
         return String.format("redirect:/question/detail/%s", id);
     }
 }

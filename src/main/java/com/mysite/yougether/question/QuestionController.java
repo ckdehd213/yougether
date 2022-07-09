@@ -1,5 +1,7 @@
 package com.mysite.yougether.question;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mysite.yougether.answer.AnswerForm;
+import com.mysite.yougether.user.SiteUser;
+import com.mysite.yougether.user.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
 
 	private final QuestionService qService;
+	private final UserService uService; 
 	
 	@RequestMapping("/list")
 	//@ResponseBody 템플릿을 사용하기 때문에 필요 x
@@ -52,11 +57,12 @@ public class QuestionController {
 	}
 	// 오버로딩
 	@PostMapping("/create")
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 			if(bindingResult.hasErrors()) {
 				return "question_form";
 			}
-		this.qService.create(questionForm.getSubject(), questionForm.getContent());
+			SiteUser siteUser = this.uService.getUser(principal.getName());
+		this.qService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 		return "redirect:/question/list";
 	}
 	
