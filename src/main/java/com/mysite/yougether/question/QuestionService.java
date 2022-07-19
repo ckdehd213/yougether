@@ -46,4 +46,12 @@ public class QuestionService {
 		q.setAuthor(user);
 		this.qr.save(q);
 	}
+	
+	public void modify(Question question, String subject, String content) {
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setModifyDate(LocalDateTime.now());
+		this.qr.save(question);
+		
+	}
 }
