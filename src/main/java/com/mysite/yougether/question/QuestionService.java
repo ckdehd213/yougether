@@ -38,7 +38,7 @@ public class QuestionService {
 		}
 	}
 	
-	public void create(String content, String subject, SiteUser user) {
+	public void create(String subject, String content, SiteUser user) {
 		Question q=new Question();
 		q.setSubject(subject);
 		q.setContent(content);

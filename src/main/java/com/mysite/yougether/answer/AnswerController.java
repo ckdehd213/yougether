@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,7 @@ public class AnswerController {
 	private final AnswerService aService;
 	private final UserService uService;
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create/{id}")
 	//@RequestMapping(value = "/create/{id}", method = {RequestMethod.POST, RequestMethod.GET})
     public String createAnswer(Model model, @PathVariable("id") Integer id,
